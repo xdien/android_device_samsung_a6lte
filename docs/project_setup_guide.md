@@ -49,7 +49,29 @@ git clone -b lineage-18.1 https://github.com/LineageOS/android_device_samsung_sl
 git clone https://github.com/samsungexynos7870/android_hardware_samsung_slsi-linaro_config.git hardware/samsung_slsi-linaro/config
 ```
 
-## 3. Build with Docker
+## 3. Extracting and Processing Vendor Blobs
+
+Some vendor blobs (like `libhwc2on1adapter.so`) might need to be extracted from the stock ROM if missing.
+
+### Converting vendor.img (sparse) to raw image
+You can build the `simg2img` tool from source to convert the stock Samsung `vendor.img`.
+
+```bash
+# Inside the docker container or build environment
+cd /srv/src
+source build/envsetup.sh
+lunch lineage_a6lte-userdebug
+m simg2img
+```
+
+The tool will be located at: `out/host/linux-x86/bin/simg2img`.
+
+Usage:
+```bash
+./out/host/linux-x86/bin/simg2img vendor.img vendor_raw.img
+```
+
+## 4. Build with Docker
 
 Refer to the `docker_build_guide.md` for the specific Docker command, but generally:
 
